@@ -29,6 +29,7 @@ var CSGOMarket = {
                 bodyJSON.wep = wep;
                 bodyJSON.skin = skin;
                 bodyJSON.wear = wear;
+                bodyJSON.stattrak = stattrak;
                 if (typeof callback === "function") {
 	    			callback(bodyJSON)
 	    		}
@@ -36,17 +37,20 @@ var CSGOMarket = {
 	  		} else {
 	  			if (typeof callback === "function") {
 	    			callback({
+                        success: false,
                         wep: wep,
                         skin: skin,
                         wear: wear,
-                        success: false
+                        stattrak: stattrak
                     })
 	    		}
 	  			return {
-                    wep: wep,
-                    skin: skin,
-                    wear: wear,
-                    success: false};
+                        success: false,
+                        wep: wep,
+                        skin: skin,
+                        wear: wear,
+                        stattrak: stattrak
+                    };
 	  		}
 		})
 	}

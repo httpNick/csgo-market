@@ -19,7 +19,11 @@ Example output from above code (prices will always return in USD):
 { success: true,
   lowest_price: '&#36;80.50',
   volume: '48',
-  median_price: '&#36;80.01' }
+  median_price: '&#36;80.01',
+  wep: "AK-47",
+  skin: "Vulcan",
+  wear: "Factory New",
+  stattrak: "false" }
 ```
 (lowest price: $80.50, median_price: $80.01, 48 on the market.)
 
