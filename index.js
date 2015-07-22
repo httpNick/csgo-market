@@ -15,7 +15,7 @@ var CSGOMarket = {
 	* @param {String} wear The wear of the skin
 	* @param {boolean} stattrak boolean for including stattrak to request, 
 	*/
-	getSinglePrice : function(wep, skin, wear, stattrak) {
+	getSinglePrice : function(wep, skin, wear, stattrak, callback) {
 			// Mach check for missing "-" in the wear.
 			if (wear.toUpperCase() === "FIELD TESTED" 
 				|| wear.toUpperCase() === "BATTLE SCARRED"
@@ -25,8 +25,14 @@ var CSGOMarket = {
 		request(urlify(wep, skin, wear, stattrak), function(err, response, body) {
 
 			if (!err && response.statusCode == 200) {
+	    		if (typeof callback === "function") {
+	    			callback(JSON.parse(body))
+	    		}
 	    		return JSON.parse(body);
 	  		} else {
+	  			if (typeof callback === "function") {
+	    			callback({success: false})
+	    		}
 	  			return {success: false};
 	  		}
 		})
