@@ -1,6 +1,6 @@
 {
   "name": "csgo-market",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "module to get pricing data for CS:GO weapon skins from Steam Community Market",
   "main": "index.js",
   "scripts": {
