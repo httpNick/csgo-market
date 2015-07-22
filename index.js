@@ -25,15 +25,28 @@ var CSGOMarket = {
 		request(urlify(wep, skin, wear, stattrak), function(err, response, body) {
 
 			if (!err && response.statusCode == 200) {
-	    		if (typeof callback === "function") {
-	    			callback(JSON.parse(body))
+	    		bodyJSON = JSON.parse(body);
+                bodyJSON.wep = wep;
+                bodyJSON.skin = skin;
+                bodyJSON.wear = wear;
+                if (typeof callback === "function") {
+	    			callback(bodyJSON)
 	    		}
-	    		return JSON.parse(body);
+	    		return bodyJSON;
 	  		} else {
 	  			if (typeof callback === "function") {
-	    			callback({success: false})
+	    			callback({
+                        wep: wep,
+                        skin: skin,
+                        wear: wear,
+                        success: false
+                    })
 	    		}
-	  			return {success: false};
+	  			return {
+                    wep: wep,
+                    skin: skin,
+                    wear: wear,
+                    success: false};
 	  		}
 		})
 	}
@@ -50,4 +63,4 @@ var urlify = function(wep, skin, wear, stattrak) {
 	return url += encodeURI(wep)+encodeURI(' | ')+encodeURI(skin)+encodeURI(' ('+wear+')');
 }
 
-module.exports = CSGOMarket;
+module.exports = CSGOMarket;;
