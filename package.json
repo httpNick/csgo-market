@@ -1,0 +1,32 @@
+{
+  "name": "csgo-market",
+  "version": "0.0.1",
+  "description": "module to get pricing data for CS:GO weapon skins from Steam Community Market",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/httpNick/csgo-market.git"
+  },
+  "keywords": [
+    "csgo",
+    "cs:go",
+    "Counter-Strike",
+    "Steam",
+    "Steam",
+    "Market",
+    "Community",
+    "Marketplace"
+  ],
+  "author": "httpNick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/httpNick/csgo-market/issues"
+  },
+  "homepage": "https://github.com/httpNick/csgo-market#readme",
+  "dependencies": {
+    "request": "^2.60.0"
+  }
+}
