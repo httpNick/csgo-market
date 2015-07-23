@@ -51,7 +51,7 @@ Returns data from the Steam market to `callback` with 2 arguments `(err, data)` 
 
 
 ### NOTE:
-Capitalization is important for passed in values. If you are unsure of the exact name/spelling/capitilization/punctuation of a weapon and/or skin I highly recommend checking the [community market as a reference]((http://steamcommunity.com/market/).
+Capitalization is important for passed in values. If you are unsure of the exact name/spelling/capitilization/punctuation of a weapon and/or skin I highly recommend checking the [community market as a reference](http://steamcommunity.com/market/).
 
 
 ### Main goals to add in the near future:
