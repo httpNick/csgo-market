@@ -9,29 +9,29 @@ Use case:
 ```js
 var csgomarket = require('csgo-market');
 
-csgomarket.getSinglePrice("AK-47", "Vulcan", "Factory New", null, function(err, data) {
-		
-		if (err) {
-			console.error('ERROR', err);
-		} else {
-			console.log(data);
-		}
-		
-	});
+csgomarket.getSinglePrice('AK-47', 'Vulcan', 'Factory New', null, function (err, data) {
+
+  if (err) {
+    console.error('ERROR', err);
+  } else {
+    console.log(data);
+  }
+
+});
 ```
 
-Example output from above code (prices will always return in USD): 
+Example output from above code (prices will always return in USD):
 
 ```json
 {
-	"success": true,
-	"lowest_price": "&#36;80.50",
-	"volume": "48",
-	"median_price": "&#36;80.01",
-	"wep": "AK-47",
-	"skin": "Vulcan",
-	"wear": "Factory New",
-	"stattrak": false
+  "success": true,
+  "lowest_price": "&#36;80.50",
+  "volume": "48",
+  "median_price": "&#36;80.01",
+  "wep": "AK-47",
+  "skin": "Vulcan",
+  "wear": "Factory New",
+  "stattrak": false
 }
 ```
 - Lowest price: *$80.50*
@@ -58,6 +58,6 @@ Capitalization is important for passed in values. If you are unsure of the exact
 - Method for Knife pricing
 - Method for all wears given a particular gun and skin.
 
-This module is still under-development and this is just the first iteration. 
+This module is still under-development and this is just the first iteration.
 
 If you have any suggestions I am open to add additional functionality! I'd like to keep it small, but I'd love feedback. Email me at nick.b.duncan@gmail.com
