@@ -41,11 +41,20 @@ Example output from above code (prices will always return in USD):
 
 ### getSinglePrice(wep, skin, wear, stattrak, callback)
 
-- **wep**: Name of the weapon to be requested. Ex: `"AK-47"`
-- **skin**: Name of the skin to be requested. Ex: `"Vulcan"`
-- **wear**: Wear of the skin to be requested. These options are available: `Factory New`, `Minimal Wear`, `Field-Tested`, `Well-Worn`, and `Battle-Scarred`. Defaults to `"Field-Tested"` but a Levenshtein distance will be used to ensure a match
+- **wep**: Name of the weapon to be requested. Ex: `'AK-47'`.
+- **skin**: Name of the skin to be requested. Ex: `"'Vulcan'`.
+- **wear**: Wear of the skin to be requested. These options are available: `Factory New`, `Minimal Wear`, `Field-Tested`, `Well-Worn`, and `Battle-Scarred`. Defaults to `'Field-Tested'` but a Levenshtein distance will be used to ensure a match.
 - **stattrak**: Boolean which signifies if you want StatTrak to be included in the request or not. Defaults to `false`
-- **callback**: Callback function which returns the request data. `function(err, data)`
+- **callback**: Callback function which returns the request data. `function(err, data)`.
+
+Returns data from the Steam market to `callback` with 2 arguments `(err, data)` where `data` is the response.
+
+### getSingleKnifePrice(knife, skin, wear, stattrak, callback)
+- **knife**: Name of the knife to be requested. Ex: `'Karambit'`.
+- **skin**: Name of the skin to be requested. Ex: `'Crimson Web'`. `Note:` If skin is set to `null` [example of a knife with no skin](http://steamcommunity.com/market/listings/730/★%20Karambit) then it will request the version of the Knife with no skin.
+- **wear**: Wear of the skin to be requested. These options are available: `Factory New`, `Minimal Wear`, `Field-Tested`, `Well-Worn`, and `Battle-Scarred`. Defaults to `'Field-Tested'` but a Levenshtein distance will be used to ensure a match. `Note:` If skin is set `null` wear will also be set to `null`.
+- **stattrak**: Boolean which signifies if you want StatTrak to be included in the request or not. Defaults to `false`
+- **callback**: Callback function which returns the request data. `function(err, data)`.
 
 Returns data from the Steam market to `callback` with 2 arguments `(err, data)` where `data` is the response.
 
@@ -55,8 +64,7 @@ Capitalization is important for passed in values. If you are unsure of the exact
 
 
 ### Main goals to add in the near future:
-- Method for Knife pricing
-- Method for all wears given a particular gun and skin.
+- Method for all wears given a particular gun and skin or knife and skin.
 
 This module is still under-development and this is just the first iteration.
 
