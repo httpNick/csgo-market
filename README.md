@@ -51,8 +51,8 @@ Returns data from the Steam market to `callback` with 2 arguments `(err, data)` 
 
 ### getSingleKnifePrice(knife, skin, wear, stattrak, callback)
 - **knife**: Name of the knife to be requested. Ex: `'Karambit'`.
-- **skin**: Name of the skin to be requested. Ex: `'Crimson Web'`. `Note:` If skin is set to `null` [example of a knife with no skin](http://steamcommunity.com/market/listings/730/★%20Karambit) then it will request the version of the Knife with no skin.
-- **wear**: Wear of the skin to be requested. These options are available: `Factory New`, `Minimal Wear`, `Field-Tested`, `Well-Worn`, and `Battle-Scarred`. Defaults to `'Field-Tested'` but a Levenshtein distance will be used to ensure a match. `Note:` If skin is set `null` wear will also be set to `null`.
+- **skin**: Name of the skin to be requested. Ex: `'Crimson Web'`. `Note:` If skin is set to `null` then it will request the version of the Knife with no skin. [example of a knife with no skin](http://steamcommunity.com/market/listings/730/★%20Karambit)
+- **wear**: Wear of the skin to be requested. These options are available: `Factory New`, `Minimal Wear`, `Field-Tested`, `Well-Worn`, and `Battle-Scarred`. Defaults to `'Field-Tested'` but a Levenshtein distance will be used to ensure a match. `Note:` If skin is set to `null` wear will also be set to `null`.
 - **stattrak**: Boolean which signifies if you want StatTrak to be included in the request or not. Defaults to `false`
 - **callback**: Callback function which returns the request data. `function(err, data)`.
 
