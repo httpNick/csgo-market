@@ -159,7 +159,3 @@ exports.getSingleKnifePrice = function(knife, skin, wear, stattrak, callback) {
     }
   });
 };
-
-exports.getSingleKnifePrice('Karambit', 'Crimson Web', null, true, function(err, data) {
-	console.log(data);
-})
