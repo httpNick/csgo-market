@@ -159,3 +159,37 @@ exports.getSingleKnifePrice = function(knife, skin, wear, stattrak, callback) {
     }
   });
 };
+
+/**
+* Promisified version of the getSinglePrice function.
+* Big thanks Roamer-1888 on Stackoverflow for help with this function.
+* Returns a Q promise which can be used by outside functions to handle multiple calls.
+*/
+exports.getSinglePriceAsync = function(wep, skin, wear, stattrak) {
+  return Q.Promise(function(resolve, reject) {
+    exports.getSinglePrice(wep, skin, wear, stattrak, function(err, result) {
+      if (err) {
+        reject(result);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+/**
+* Promisifed version of the getSingleKnifePrice function.
+* Big thanks Roamer-1888 on Stackoverflow for help with this function.
+* Returns a Q promise which can be used by outside functions to handle multiple calls.
+*/
+exports.getSingleKnifePriceAsync = function(knife, skin, wear, stattrak) {
+  return Q.Promise(function(resolve, reject) {
+    exports.getSingleKnifePrice(wep, skin, wear, stattrak, function(err, result) {
+      if (err) {
+        reject(result);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
