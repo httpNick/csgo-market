@@ -36,6 +36,7 @@
   "dependencies": {
     "get-closest": "0.0.2",
     "levenshtein": "^1.0.5",
+    "q": "^1.4.1",
     "request": "^2.60.0"
   }
 }
