@@ -1,6 +1,7 @@
 var request = require('request');
 var getClosest = require('get-closest');
 var Levenshtein = require('levenshtein');
+var Q = require('q');
 
 // Base URL for all GET requests
 var baseUrl = "http://steamcommunity.com/";
