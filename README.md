@@ -38,6 +38,7 @@ Example output from above code (prices will always return in USD):
 - Median price: *$80.01*
 - *48* sold/bought on the market
 
+##Methods
 
 ### getSinglePrice(wep, skin, wear, stattrak, callback)
 
@@ -57,6 +58,55 @@ Returns data from the Steam market to `callback` with 2 arguments `(err, data)` 
 - **callback**: Callback function which returns the request data. `function(err, data)`.
 
 Returns data from the Steam market to `callback` with 2 arguments `(err, data)` where `data` is the response.
+
+## Asyncrhonous Methods
+
+### getSinglePriceAsync(wep, skin, wear, statrak)
+
+Same parameters minus the callback as the non-async version.
+Promisified version of the getSinglePrice method (Example usage below).
+
+### getSingleKnifePriceAsync(knife, skin, wear, stattrak)
+
+Same parameters minus the callback as the non-async version.
+Promisified version of the getSingleKnifePrice method.
+
+### Use case:
+
+'''js
+var csgomarket = require('csgo-market');
+var Q = require('q');
+
+var wears = ['Factory New', 'Minimal Wear',
+  'Field-Tested', 'Well-Worn', 'Battle-Scarred'];
+
+var data = {
+  prices : [{
+    weapon : "AWP",
+    cached : false,
+    skins : ['Asiimov', 'BOOM', 'Man-o\'-war'],
+    skinData : {}
+  }]
+}
+
+var getPrice = function(theData) {
+  var promises = [];
+  theData.skins.forEach(function(skin) {
+    theData.skinData[skin] = {};
+    wears.forEach(function(wear) {
+      promises.push(csgomarket.getSinglePriceAsync(theData.weapon, skin, wear, false).then(function(data) {
+        theData.skinData[skin][wear] = data;
+      }));
+    });
+  });
+  return Q.allSettled(promises).then(function() {
+    return theData;
+  });
+}
+getPrice(all.prices[0]).then(function(results) {
+  // Do something with returned results here.
+})
+'''
 
 
 ### NOTE:
