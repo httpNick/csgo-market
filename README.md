@@ -73,7 +73,7 @@ Promisified version of the getSingleKnifePrice method.
 
 ### Use case:
 
-'''js
+```js
 var csgomarket = require('csgo-market');
 var Q = require('q');
 
@@ -106,7 +106,7 @@ var getPrice = function(theData) {
 getPrice(all.prices[0]).then(function(results) {
   // Do something with returned results here.
 })
-'''
+```
 
 
 ### NOTE:
