@@ -103,7 +103,7 @@ var getPrice = function(theData) {
     return theData;
   });
 }
-getPrice(all.prices[0]).then(function(results) {
+getPrice(data.prices[0]).then(function(results) {
   // Do something with returned results here.
 })
 ```
