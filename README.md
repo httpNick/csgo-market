@@ -38,12 +38,12 @@ Example output from above code (prices will always return in USD):
 - Median price: *$80.01*
 - *48* sold/bought on the market
 
-##Methods
+## Methods
 
 ### getSinglePrice(wep, skin, wear, stattrak, callback)
 
 - **wep**: Name of the weapon to be requested. Ex: `'AK-47'`.
-- **skin**: Name of the skin to be requested. Ex: `"'Vulcan'`.
+- **skin**: Name of the skin to be requested. Ex: `'Vulcan'`.
 - **wear**: Wear of the skin to be requested. These options are available: `Factory New`, `Minimal Wear`, `Field-Tested`, `Well-Worn`, and `Battle-Scarred`. Defaults to `'Field-Tested'` but a Levenshtein distance will be used to ensure a match.
 - **stattrak**: Boolean which signifies if you want StatTrak to be included in the request or not. Defaults to `false`
 - **callback**: Callback function which returns the request data. `function(err, data)`.
