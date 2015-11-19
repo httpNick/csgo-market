@@ -64,7 +64,7 @@ Returns data from the Steam market to `callback` with 2 arguments `(err, data)` 
 - **stickerName**: Name of the Sticker to be requested
                    Note: Do not include the initial `'Sticker | '` infront of the sticker name.
                          Also, do not include `'(Foil)'` within the name.
-                   Ex: `'Robo'` or `'KennyS | Cologne 2015'`.
+                   Ex: `'Robo'` or `'kennyS | Cologne 2015'`.
 - **foil**: Boolean which signifies if you want the (Foil) option included in the request.
             Note: Not all stickers have foil counterparts.
 - **callback**: Callback function which returns the request data. `function(err, data)`.
