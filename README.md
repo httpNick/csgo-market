@@ -59,6 +59,18 @@ Returns data from the Steam market to `callback` with 2 arguments `(err, data)` 
 
 Returns data from the Steam market to `callback` with 2 arguments `(err, data)` where `data` is the response.
 
+### getSingleStickerPrice(stickerName, foil, callback)
+
+- **stickerName**: Name of the Sticker to be requested
+                   Note: Do not include the initial `'Sticker | '` infront of the sticker name.
+                         Also, do not include `'(Foil)'` within the name.
+                   Ex: `'Robo'` or `'KennyS | Cologne 2015'`.
+- **foil**: Boolean which signifies if you want the (Foil) option included in the request.
+            Note: Not all stickers have foil counterparts.
+- **callback**: Callback function which returns the request data. `function(err, data)`.
+
+Returns data from the Steam market to `callback` with 2 arguments `(err, data)` where `data` is the response.
+
 ## Asyncrhonous Methods
 
 ### getSinglePriceAsync(wep, skin, wear, statrak)
@@ -70,6 +82,11 @@ Promisified version of the getSinglePrice method (Example usage below).
 
 Same parameters minus the callback as the non-async version.
 Promisified version of the getSingleKnifePrice method.
+
+### getSingleStickerPriceAsync(stickerName, foil)
+
+Same parameters minus the callback as the non-async version.
+Promisified version of the getSingleStickerPrice method.
 
 ### Use case:
 
@@ -103,6 +120,7 @@ var getPrice = function(theData) {
     return theData;
   });
 }
+
 getPrice(data.prices[0]).then(function(results) {
   // Do something with returned results here.
 })

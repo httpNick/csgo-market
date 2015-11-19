@@ -16,20 +16,11 @@ var appID = 730;
 var currency = 1;
 var stattrackString = "StatTrak™";
 var starString = "★";
+var foilString = "(Foil)";
+var stickerString = "Sticker |";
 
 // List of all wears
 var wears = ['Factory New', 'Minimal Wear', 'Field-Tested', 'Well-Worn', 'Battle-Scarred'];
-
-/**
- * Helper method to format URL for request.
- */
-var market_hash = function (wep, skin, wear, stattrak) {
-  var url = '';
-  if (stattrak) {
-    url += stattrackString + ' ';
-  }
-  return url + wep + ' | ' + skin + ' (' + wear + ')';
-};
 
 /**
 * Helper method to choose wear.
@@ -43,8 +34,22 @@ var closest_wear = function(wear) {
   } else {
     return wear = wears[2];
   }
-}
+};
 
+/**
+ * Helper method to format URL for weapon request.
+ */
+var market_hash = function (wep, skin, wear, stattrak) {
+  var url = '';
+  if (stattrak) {
+    url += stattrackString + ' ';
+  }
+  return url + wep + ' | ' + skin + ' (' + wear + ')';
+};
+
+/**
+* Helper method to format URL for knife request.
+*/
 var knife_market_hash = function(knife, skin, wear, stattrak) {
 	var url = starString + ' ';
 	if (stattrak) {
@@ -56,7 +61,37 @@ var knife_market_hash = function(knife, skin, wear, stattrak) {
 	} else {
 	  return url += ' | ' + skin + ' (' + wear + ')';
 	}
-}
+};
+
+/**
+* Helper method to format URL for sticker request.
+*/
+var sticker_market_hash = function(stickerName, foil) {
+  if (foil) {
+    if (stickerName.indexOf('|') === -1) {
+      // This is a regular foil sticker. Ex: 'Sticker | Robo (Foil)'
+      return stickerString
+        + ' ' + stickerName
+        + ' ' + foilString;
+    } else {
+      /*
+      * This is a player sticker with foil.
+      * Split the name and event/year up into two parts.
+      * Ex: 'Sticker | kennyS (Foil) | Cologne 2015'
+      */
+      var splitStickerName = stickerName.split(' | ');
+      return stickerString
+        + ' ' + splitStickerName[0]
+        + ' ' + foilString
+        + ' | '
+        + splitStickerName[1];
+    }
+  } else {
+    // This is a regular sticker with no foil. Ex: 'Sticker | Robo'
+    return stickerString
+      + ' ' + stickerName;
+  }
+};
 
 /**
  * Retrieve price for a given weapon, skin, and wear. Also gives an option for StatTrak.
@@ -97,7 +132,7 @@ exports.getSinglePrice = function (wep, skin, wear, stattrak, callback) {
       bodyJSON.skin = skin;
       bodyJSON.wear = wear;
       bodyJSON.stattrak = stattrak;
-      
+
       callback(null, bodyJSON);
 
     } else if (!err && response.statusCode !== 200) {
@@ -106,8 +141,8 @@ exports.getSinglePrice = function (wep, skin, wear, stattrak, callback) {
       callback(err);
     }
   });
-
 };
+
 /**
  * Retrieve price for a single knife. Deserved own method because knives can be on the market
  * without having a skin or wear. Also knives starts with a ★ in their name.
@@ -133,6 +168,7 @@ exports.getSingleKnifePrice = function(knife, skin, wear, stattrak, callback) {
 
   // Combine for unique skin name: ★ StatTrak™ Karambit | Crimson Web (Field-Tested)
   var market_hash_name = knife_market_hash(knife, skin, wear, stattrak);
+
   request({
   	uri: '/market/priceoverview',
   	baseUrl: baseUrl,
@@ -150,7 +186,48 @@ exports.getSingleKnifePrice = function(knife, skin, wear, stattrak, callback) {
         bodyJSON.skin = skin;
         bodyJSON.wear = wear;
         bodyJSON.stattrak = stattrak;
-        
+
+        callback(null, bodyJSON);
+
+    } else if (!err && response.statusCode !== 200) {
+      callback(new Error('Unsuccessful response'));
+    } else {
+      callback(err);
+    }
+  });
+};
+
+/**
+ * Retrieve price for a single sticker.
+ *
+ * @param {String} stickerName name of sticker for request
+ * @param {Boolean} foil Boolean for including foil to the request.
+ * @param {Function} callback Return requested data
+ */
+exports.getSingleStickerPrice = function(stickerName, foil, callback) {
+  // Requires a callback
+  if (typeof callback !== 'function') {
+    throw new Error('No callback supplied');
+  }
+
+  var market_hash_name = sticker_market_hash(stickerName, foil);
+
+  request({
+  	uri: '/market/priceoverview',
+  	baseUrl: baseUrl,
+  	json: true,
+  	qs: {
+  	  currency: currency,
+      appid: appID,
+  	  market_hash_name: market_hash_name
+  	}
+  }, function(err, response, body) {
+  	  if (!err && response.statusCode === 200) {
+        var bodyJSON = body;
+
+        bodyJSON.stickername = market_hash_name;
+        bodyJSON.foil = foil;
+
         callback(null, bodyJSON);
 
     } else if (!err && response.statusCode !== 200) {
@@ -186,6 +263,21 @@ exports.getSinglePriceAsync = function(wep, skin, wear, stattrak) {
 exports.getSingleKnifePriceAsync = function(knife, skin, wear, stattrak) {
   return Q.Promise(function(resolve, reject) {
     exports.getSingleKnifePrice(wep, skin, wear, stattrak, function(err, result) {
+      if (err) {
+        reject(result);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+/**
+* Promisified version of the getSingleStickerPrice function.
+*/
+exports.getSingleStickerPriceAsync = function(stickerName, foil) {
+  return Q.Promise(function(resolve, reject) {
+    exports.getSingleStickerPrice(stickerName, foil, function(err, result) {
       if (err) {
         reject(result);
       } else {
