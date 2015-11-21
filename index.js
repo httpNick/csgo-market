@@ -4,18 +4,6 @@ var Levenshtein = require('levenshtein');
 var Q = require('q');
 var hashName = require('./hashname.js');
 
-// Base URL for all GET requests
-var baseUrl = "http://steamcommunity.com/";
-
-/**
- * Counter-Strike: Global Offensive
- * http://store.steampowered.com/app/730/
- */
-var appID = 730;
-
-// 1 for USD
-var currency = 1;
-
 /**
 * Helper method to choose wear.
 */
@@ -36,6 +24,46 @@ var closest_wear = function(wear) {
     return wear = wears[2];
   }
 };
+
+var makeRequest = function(market_hash_name, callback) {
+
+  // Requires a callback
+  if (typeof callback !== 'function') {
+    throw new Error('No callback supplied');
+  }
+
+  // Base URL for all GET requests
+  var baseUrl = 'http://steamcommunity.com/';
+  var uri = '/market/priceoverview/';
+
+  /**
+   * Counter-Strike: Global Offensive
+   * http://store.steampowered.com/app/730/
+   */
+  var appID = 730;
+
+  // 1 for USD
+  var currency = 1;
+
+  request({
+    uri: uri,
+    baseUrl: baseUrl,
+    json: true,
+    qs: {
+      currency: currency,
+      appid: appID,
+      market_hash_name: market_hash_name
+    }
+  }, function (err, response, body) {
+    if (!err && response.statusCode === 200) {
+      callback(null, body);
+    } else if (!err && response.statusCode !== 200) {
+      callback(new Error('Unsuccessful response'));
+    } else {
+      callback(err);
+    }
+  });
+}
 
 /**
  * Retrieve price for a given weapon, skin, and wear. Also gives an option for StatTrak.
@@ -64,32 +92,18 @@ exports.getSinglePrice = function (wep, skin, wear, stattrak, callback) {
     stattrak
   );
 
-  request({
-    uri: '/market/priceoverview/',
-    baseUrl: baseUrl,
-    json: true,
-    qs: {
-      currency: currency,
-      appid: appID,
-      market_hash_name: market_hash_name
-    }
-  }, function (err, response, body) {
-
-    if (!err && response.statusCode === 200) {
-      var bodyJSON = body;
-
-      bodyJSON.wep = wep;
-      bodyJSON.skin = skin;
-      bodyJSON.wear = wear;
-      bodyJSON.stattrak = stattrak;
-
-      callback(null, bodyJSON);
-
-    } else if (!err && response.statusCode !== 200) {
-      callback(new Error('Unsuccessful response'));
-    } else {
-      callback(err);
-    }
+  makeRequest(market_hash_name, function(err, body) {
+    !err ? (
+      bodyJSON = body,
+      bodyJSON.wep = wep,
+      bodyJSON.skin = skin,
+      bodyJSON.wear = wear,
+      bodyJSON.stattrak = stattrak,
+      callback(null, bodyJSON)
+    ) :
+    (
+      callback(err)
+    )
   });
 };
 
@@ -124,31 +138,18 @@ exports.getSingleKnifePrice = function(knife, skin, wear, stattrak, callback) {
     stattrak
   );
 
-  request({
-  	uri: '/market/priceoverview',
-  	baseUrl: baseUrl,
-  	json: true,
-  	qs: {
-  	  currency: currency,
-      appid: appID,
-  	  market_hash_name: market_hash_name
-  	}
-  }, function(err, response, body) {
-  	  if (!err && response.statusCode === 200) {
-        var bodyJSON = body;
-
-        bodyJSON.knife = knife;
-        bodyJSON.skin = skin;
-        bodyJSON.wear = wear;
-        bodyJSON.stattrak = stattrak;
-
-        callback(null, bodyJSON);
-
-    } else if (!err && response.statusCode !== 200) {
-      callback(new Error('Unsuccessful response'));
-    } else {
-      callback(err);
-    }
+  makeRequest(market_hash_name, function(err, body) {
+    !err ? (
+      bodyJSON = body,
+      bodyJSON.knife = knife,
+      bodyJSON.skin = skin,
+      bodyJSON.wear = wear,
+      bodyJSON.stattrak = stattrak,
+      callback(null, bodyJSON)
+    ) :
+    (
+      callback(err)
+    )
   });
 };
 
@@ -170,29 +171,16 @@ exports.getSingleStickerPrice = function(stickerName, foil, callback) {
     foil
   );
 
-  request({
-  	uri: '/market/priceoverview',
-  	baseUrl: baseUrl,
-  	json: true,
-  	qs: {
-  	  currency: currency,
-      appid: appID,
-  	  market_hash_name: market_hash_name
-  	}
-  }, function(err, response, body) {
-  	  if (!err && response.statusCode === 200) {
-        var bodyJSON = body;
-
-        bodyJSON.stickername = market_hash_name;
-        bodyJSON.foil = foil;
-
-        callback(null, bodyJSON);
-
-    } else if (!err && response.statusCode !== 200) {
-      callback(new Error('Unsuccessful response'));
-    } else {
-      callback(err);
-    }
+  makeRequest(market_hash_name, function(err, body) {
+    !err ? (
+      bodyJSON = body,
+      bodyJSON.stickername = market_hash_name,
+      bodyJSON.foil = foil,
+      callback(null, bodyJSON)
+    ) :
+    (
+      callback(err)
+    )
   });
 };
 
@@ -212,28 +200,15 @@ exports.getSingleKeyPrice = function(key, callback) {
     key
   );
 
-  request({
-    uri: '/market/priceoverview',
-    baseUrl: baseUrl,
-    json: true,
-    qs: {
-      currency: currency,
-      appid: appID,
-      market_hash_name: market_hash_name
-    }
-  }, function(err, response, body) {
-      if (!err && response.statusCode === 200) {
-        var bodyJSON = body;
-
-        bodyJSON.key = market_hash_name;
-
-        callback(null, bodyJSON);
-
-    } else if (!err && response.statusCode !== 200) {
-      callback(new Error('Unsuccessful response'));
-    } else {
-      callback(err);
-    }
+  makeRequest(market_hash_name, function(err, body) {
+    !err ? (
+      bodyJSON = body,
+      bodyJSON.key = market_hash_name,
+      callback(null, bodyJSON)
+    ) :
+    (
+      callback(err)
+    )
   });
 };
 
