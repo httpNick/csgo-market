@@ -6,7 +6,8 @@ var stattrackString = "StatTrak™";
 var starString = "★";
 var foilString = "(Foil)";
 var stickerString = "Sticker |";
-var keyString = "Case Key";
+var caseKeyString = "Case Key";
+var keyString = "Key";
 
 /**
  * Helper method to format URL for weapon request.
@@ -69,7 +70,11 @@ exports.stickerHash = function(stickerName, foil) {
 * Helper method to format URL for key request.
 */
 exports.keyHash = function(key) {
-  return key
-    + ' ' +
-    keyString;
+  return key.indexOf('eSports') < 0 ?
+    (
+      key + ' ' + caseKeyString
+    ):
+    (
+      key + ' ' + keyString
+    )
 }

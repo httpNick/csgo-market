@@ -38,7 +38,8 @@ Example output from above code (prices will always return in USD):
 - Median price: *$80.01*
 - *48* sold/bought on the market
 
-## Methods
+# Methods
+#### Each function returns data from the Steam market to `callback` with 2 arguments `(err, data)` where `data` is the response.
 
 ### getSinglePrice(wep, skin, wear, stattrak, callback)
 
@@ -48,16 +49,12 @@ Example output from above code (prices will always return in USD):
 - **stattrak**: Boolean which signifies if you want StatTrak to be included in the request or not. Defaults to `false`
 - **callback**: Callback function which returns the request data. `function(err, data)`.
 
-Returns data from the Steam market to `callback` with 2 arguments `(err, data)` where `data` is the response.
-
 ### getSingleKnifePrice(knife, skin, wear, stattrak, callback)
 - **knife**: Name of the knife to be requested. Ex: `'Karambit'`.
 - **skin**: Name of the skin to be requested. Ex: `'Crimson Web'`. `Note:` If skin is set to `null` then it will request the version of the Knife with no skin. [example of a knife with no skin](http://steamcommunity.com/market/listings/730/★%20Karambit)
 - **wear**: Wear of the skin to be requested. These options are available: `Factory New`, `Minimal Wear`, `Field-Tested`, `Well-Worn`, and `Battle-Scarred`. Defaults to `'Field-Tested'` but a Levenshtein distance will be used to ensure a match. `Note:` If skin is set to `null` wear will also be set to `null`.
 - **stattrak**: Boolean which signifies if you want StatTrak to be included in the request or not. Defaults to `false`
 - **callback**: Callback function which returns the request data. `function(err, data)`.
-
-Returns data from the Steam market to `callback` with 2 arguments `(err, data)` where `data` is the response.
 
 ### getSingleStickerPrice(stickerName, foil, callback)
 
@@ -69,9 +66,13 @@ Returns data from the Steam market to `callback` with 2 arguments `(err, data)` 
             Note: Not all stickers have foil counterparts.
 - **callback**: Callback function which returns the request data. `function(err, data)`.
 
-Returns data from the Steam market to `callback` with 2 arguments `(err, data)` where `data` is the response.
+### getSingleKeyPrice(key, callback)
 
-## Asyncrhonous Methods
+- **key**: Name of the key to be requested. Supports any Case Key and the eSports key. Does **not** support capsule keys currently.
+
+- **callback**: Callback function which returns the request data. `function(err, data)`.
+
+# Asyncrhonous Methods
 
 ### getSinglePriceAsync(wep, skin, wear, statrak)
 
@@ -87,6 +88,11 @@ Promisified version of the getSingleKnifePrice method.
 
 Same parameters minus the callback as the non-async version.
 Promisified version of the getSingleStickerPrice method.
+
+### getSingleKeyPriceAsync(key)
+
+Same parameters minus the callback as the non-async version.
+Promisified version of the getSingleKeyPrice method.
 
 ### Use case:
 
