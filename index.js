@@ -3,6 +3,7 @@ var getClosest = require('get-closest');
 var Levenshtein = require('levenshtein');
 var Q = require('q');
 var hashName = require('./hashname.js');
+var allNames = require('./matchingnames');
 
 /**
 * Helper method to choose wear.
@@ -23,6 +24,25 @@ var closest_wear = function(wear) {
   } else {
     return wear = wears[2];
   }
+};
+
+var closest_name = function(item, choices) {
+
+  if (exports.strictNameMode) {
+
+    return item;
+
+  } else {
+
+    var closestWeapon = getClosest.custom(item, choices, function (a, b) {
+
+      return new Levenshtein(a, b).distance;
+
+    });
+
+    return choices[closestWeapon];
+  }
+
 };
 
 var makeRequest = function(market_hash_name, callback) {
@@ -65,6 +85,7 @@ var makeRequest = function(market_hash_name, callback) {
   });
 }
 
+exports.strictNameMode = true;
 /**
  * Retrieve price for a given weapon, skin, and wear. Also gives an option for StatTrak.
  *
@@ -82,7 +103,12 @@ exports.getSinglePrice = function (wep, skin, wear, stattrak, callback) {
   }
 
   // Pick closest wear to eliminate error
-  var wear = closest_wear(wear);
+  wear = closest_wear(wear);
+  // If strictNameMode is off, choose the closest wep name.
+  wep = closest_name(
+    wep,
+    allNames.weapons
+  );
 
   // Combine for unique skin name: StatTrak™ AK-47 | Vulcan (Factory New)
   var market_hash_name = hashName.gunHash(
@@ -129,6 +155,11 @@ exports.getSingleKnifePrice = function(knife, skin, wear, stattrak, callback) {
   } else {
   	wear = null;
   }
+  // if strictNameMode is off, choose the closest knife name.
+  knife = closest_name(
+    knife,
+    allNames.knives
+  );
 
   // Combine for unique skin name: ★ StatTrak™ Karambit | Crimson Web (Field-Tested)
   var market_hash_name = hashName.knifeHash(
