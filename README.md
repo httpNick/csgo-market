@@ -18,6 +18,21 @@ csgomarket.getSinglePrice('AK-47', 'Vulcan', 'Factory New', null, function (err,
   }
 
 });
+
+// If you want to disable strictNameMode.
+csgomarket.strictNameMode = false;
+
+// Notice the missing '-' in AK 47. With strictNameMode off it will internally swap to 'AK-47'.
+csgomarket.getSinglePrice('AK 47', 'Vulcan', 'Factory New', null, function (err, data) {
+
+  if (err) {
+    console.error('ERROR', err);
+  } else {
+    console.log(data);
+  }
+
+});
+
 ```
 
 Example output from above code (prices will always return in USD):
