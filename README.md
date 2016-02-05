@@ -83,7 +83,7 @@ Example output from above code (prices will always return in USD):
 
 ### getSingleKeyPrice(key, callback)
 
-- **key**: Name of the key to be requested. Supports any Case Key and the eSports key. Does **not** support capsule keys currently.
+- **key**: Name of the key to be requested. Supports any Case Key and the eSports key. Does **not** support capsule keys currently. Example strings you can pass in: `'Chroma'`, `'Winter Offensive'` or `'eSports'`. `'Key'` or `'Case Key'` do not need to be added to the name.
 
 - **callback**: Callback function which returns the request data. `function(err, data)`.
 
